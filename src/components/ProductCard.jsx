@@ -35,15 +35,15 @@ const ProductCard = ({ product }) => {
   const cartItem = cart?.find((item) => item.id === product.id);
 
   return (
-    <div className="bg-white border rounded-lg shadow-lg overflow-hidden hover:scale-105 transition transform duration-300 max-w-sm mx-auto p-4">
+    <div className="bg-white border rounded-lg shadow-lg overflow-hidden hover:scale-105 transition transform duration-300 p-4 grid grid-cols-1 gap-4 max-w-sm mx-auto">
       <div className="w-full h-56 flex justify-center items-center bg-gray-100 p-4">
         <img src={product.image} alt={product.title} className="h-48 object-contain" />
       </div>
-      <div className="p-4 text-center">
+      <div className="text-center">
         <h3 className="text-lg font-semibold text-gray-800">{product.title}</h3>
         <p className="text-sm text-gray-600 mt-2">{product.description.slice(0, 50)}...</p>
         <p className="text-xl font-bold text-blue-600 mt-2">${product.price}</p>
-        <div className="flex gap-3 mt-4 justify-center">
+        <div className="grid grid-cols-2 gap-3 mt-4">
           <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" onClick={handleAddToCart}>
             Add to Cart
           </button>
@@ -55,7 +55,7 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="mt-4">
           <h4 className="text-md font-semibold">Leave a Review</h4>
-          <form onSubmit={handleReviewSubmit} className="mt-2">
+          <form onSubmit={handleReviewSubmit} className="mt-2 grid gap-2">
             <div className="flex justify-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button key={star} type="button" className={`text-xl ${rating >= star ? "text-yellow-400" : "text-gray-300"}`} onClick={() => setRating(star)}>
@@ -63,8 +63,8 @@ const ProductCard = ({ product }) => {
                 </button>
               ))}
             </div>
-            <textarea className="w-full p-2 border rounded-md mt-2" placeholder="Write your review..." value={review} onChange={(e) => setReview(e.target.value)} required></textarea>
-            <button type="submit" className="w-full bg-green-600 text-white py-2 mt-2 rounded-lg hover:bg-green-700 transition">
+            <textarea className="w-full p-2 border rounded-md" placeholder="Write your review..." value={review} onChange={(e) => setReview(e.target.value)} required></textarea>
+            <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
               Submit Review
             </button>
           </form>
