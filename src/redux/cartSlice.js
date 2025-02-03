@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = {
-//   items: [],
-// };
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -28,7 +25,7 @@ export const cartSlice = createSlice({
         if (state[itemIndex].quantity > 1) {
           state[itemIndex].quantity -= 1;
         } else {
-          state.splice(itemIndex, 1); // Remove item when quantity reaches 0
+          state.splice(itemIndex, 1); 
         }
       }
     },

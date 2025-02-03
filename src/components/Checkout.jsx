@@ -25,7 +25,7 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // all value is null
+
     if (
       formData.fullName === "" ||
       formData.address === "" ||
@@ -41,7 +41,6 @@ const Checkout = () => {
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
-      {/* Progress Bar */}
       <div className="flex justify-between mb-6">
         <span className={`step ${step >= 1 ? "active" : ""}`}>📝 Billing</span>
         <span className={`step ${step >= 2 ? "active" : ""}`}>📦 Shipping</span>
@@ -50,7 +49,6 @@ const Checkout = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Step 1: Billing Information */}
         {step === 1 && (
           <>
             <h2 className="text-xl font-semibold">Billing Information</h2>
@@ -69,7 +67,6 @@ const Checkout = () => {
           </>
         )}
 
-        {/* Step 2: Shipping Address */}
         {step === 2 && (
           <>
             <h2 className="text-xl font-semibold">Shipping Address</h2>
@@ -97,7 +94,6 @@ const Checkout = () => {
           </>
         )}
 
-        {/* Step 3: Payment Details */}
         {step === 3 && (
           <>
             <h2 className="text-xl font-semibold">Payment Details</h2>
@@ -125,7 +121,6 @@ const Checkout = () => {
           </>
         )}
 
-        {/* Step 4: Order Review */}
         {step === 4 && (
           <>
             <h2 className="text-xl font-semibold">Review Order</h2>

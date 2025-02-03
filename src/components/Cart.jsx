@@ -20,7 +20,6 @@ const Cart = () => {
       </h2>
 
       {cart.length === 0 ? (
-        // Empty cart UI
         <div className="flex flex-col items-center justify-center text-center">
           <img
             src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
@@ -36,7 +35,6 @@ const Cart = () => {
           </Link>
         </div>
       ) : (
-        // Cart with items UI
         <div className="bg-white p-6 shadow-lg rounded-lg">
           {cart.map((item) => (
             <div
@@ -66,10 +64,12 @@ const Cart = () => {
             </div>
           ))}
           <div className="flex justify-between items-center mt-6">
-            <Link to="/checkout"> <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
-              Checkout
-            </button></Link>
-           
+            <Link to="/checkout">
+              {" "}
+              <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                Checkout
+              </button>
+            </Link>
           </div>
         </div>
       )}

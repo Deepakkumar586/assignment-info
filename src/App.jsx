@@ -5,6 +5,7 @@ import SearchFilter from "./components/SearchFilter";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import ProductDetails from "./components/ProductDetails";
 // import ProductDetails from "./components/ProductDetails"; // New detailed product page
 
 const products = [
@@ -47,7 +48,6 @@ const App = () => {
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
 
-  // Filtering Logic
   const filteredProducts = products.filter((product) => {
     const matchesSearchTerm = product.name
       .toLowerCase()
@@ -121,6 +121,7 @@ const App = () => {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </div>
     </div>

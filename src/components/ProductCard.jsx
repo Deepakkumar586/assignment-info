@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { addToCart, removeToCart } from "../redux/cartSlice";
 import { useState } from "react";
+import { Star, ShoppingCart, Trash2, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
-  const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
+  const [rating] = useState(4);
 
   const handleAddToCart = () => {
     dispatch(addToCart(product));
@@ -20,65 +21,62 @@ const ProductCard = ({ product }) => {
     toast.error(`${product.name} removed from cart!`, { icon: "❌" });
   };
 
-  const handleReviewSubmit = (e) => {
-    e.preventDefault();
-    if (rating === 0 || review.trim() === "") {
-      toast.error("Please add a rating and review!");
-      return;
-    }
-    setReviews([...reviews, { rating, review }]);
-    setRating(0);
-    setReview("");
-    toast.success("Review submitted!");
-  };
-
   const cartItem = cart?.find((item) => item.id === product.id);
 
   return (
-    <div className="bg-white border rounded-lg shadow-lg overflow-hidden hover:scale-105 transition transform duration-300 p-4 grid grid-cols-1 gap-4 max-w-sm mx-auto">
-      <div className="w-full h-56 flex justify-center items-center bg-gray-100 p-4">
-        <img src={product.image} alt={product.title} className="h-48 object-contain" />
+    <div className="max-w-sm mx-auto bg-white rounded-2xl shadow-lg p-5 border border-gray-200 transition-transform hover:scale-105">
+      <div className="relative w-full h-60 flex justify-center items-center bg-gray-100 rounded-xl overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="h-52 object-contain transition-transform hover:scale-110"
+        />
       </div>
-      <div className="text-center">
-        <h3 className="text-lg font-semibold text-gray-800">{product.title}</h3>
-        <p className="text-sm text-gray-600 mt-2">{product.description.slice(0, 50)}...</p>
-        <p className="text-xl font-bold text-blue-600 mt-2">${product.price}</p>
-        <div className="grid grid-cols-2 gap-3 mt-4">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" onClick={handleAddToCart}>
-            Add to Cart
+
+      <div className="text-center mt-5">
+        <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+        <p className="text-sm text-gray-600 mt-2">
+          {product.description.slice(0, 60)}...
+        </p>
+        <p className="text-2xl font-bold text-blue-600 mt-2">
+          ${product.price}
+        </p>
+        <p className="text-sm text-gray-500">Category: {product.category}</p>
+
+        <div className="flex justify-center mt-2">
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star
+              key={i}
+              className={`h-5 w-5 ${
+                i < rating ? "text-yellow-400" : "text-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+
+        <div className="flex gap-3 mt-4">
+          <button
+            className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition duration-200 shadow-md"
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart className="h-5 w-5" /> Add
           </button>
           {cartItem && (
-            <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition" onClick={handleRemoveFromCart}>
-              Remove
+            <button
+              className="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-600 transition duration-200 shadow-md"
+              onClick={handleRemoveFromCart}
+            >
+              <Trash2 className="h-5 w-5" /> Remove
             </button>
           )}
         </div>
-        <div className="mt-4">
-          <h4 className="text-md font-semibold">Leave a Review</h4>
-          <form onSubmit={handleReviewSubmit} className="mt-2 grid gap-2">
-            <div className="flex justify-center gap-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button key={star} type="button" className={`text-xl ${rating >= star ? "text-yellow-400" : "text-gray-300"}`} onClick={() => setRating(star)}>
-                  ★
-                </button>
-              ))}
-            </div>
-            <textarea className="w-full p-2 border rounded-md" placeholder="Write your review..." value={review} onChange={(e) => setReview(e.target.value)} required></textarea>
-            <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-              Submit Review
-            </button>
-          </form>
-          {reviews.length > 0 && (
-            <div className="mt-4 max-h-32 overflow-y-auto border rounded-md p-2 bg-gray-50">
-              {reviews.map((r, index) => (
-                <div key={index} className="border-b pb-2 mb-2">
-                  <p className="text-yellow-500">{`★`.repeat(r.rating)}</p>
-                  <p className="text-gray-700">{r.review}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+
+        <button
+          className="mt-4 w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-300 transition duration-200 shadow-md"
+          onClick={() => navigate(`/product/${product.id}`, { state: product })}
+        >
+          <Eye className="h-5 w-5" /> View Details
+        </button>
       </div>
     </div>
   );
